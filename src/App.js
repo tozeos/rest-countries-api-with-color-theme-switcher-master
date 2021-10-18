@@ -3,10 +3,12 @@ import { ThemeProvider } from "styled-components";
 import { useDarkMode } from "./Components/useDarkMode";
 import { lightTheme, darkTheme } from "./Components/Themes";
 import { GlobalStyles } from "./Components/globalStyles";
-import { Container } from "./Components/Container";
+import { Container, Content } from "./Components/Container";
 import { SearchFilter } from "./Components/Search-filter";
 import Toggle from "./Components/Toggler";
-import {Header, Title} from "./Components/Menu";
+import { Header, Title } from "./Components/Menu";
+import { CountriesList } from "./Components/CountriesList";
+
 
 function App() {
     const [theme, themeToggler] = useDarkMode();
@@ -21,7 +23,9 @@ function App() {
                     <Toggle theme={theme} toggleTheme={themeToggler}/>
                 </Header>
                 <SearchFilter/>
-              <h1>Vou pegar bolo.</h1>
+                <Content>
+                    <CountriesList/>
+                </Content>
             </Container>
           </ThemeProvider>
   );

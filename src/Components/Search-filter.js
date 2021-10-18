@@ -12,7 +12,7 @@ export const SearchFilter = () => {
       box-shadow: ${colors.insetShadow};
 
       @media (max-width: ${breakpoints.mobile}) {
-        padding: 30px 30px;
+        padding: 50px 30px;
         gap: 1rem;
       }
 
