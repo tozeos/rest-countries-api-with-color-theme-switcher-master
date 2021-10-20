@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { breakpoints } from "./variables";
+import {breakpoints} from "./variables";
 
 export const Container = styled.div`
   height: 100vh;
-  
+
   @media (max-width: ${breakpoints.mobile}) {
     display: flex;
     flex-direction: column;
@@ -17,8 +17,8 @@ export const Content = styled.div`
   flex-wrap: wrap;
   gap: 3rem;
   justify-content: space-evenly;
-  
-  
+
+
   @media (max-width: ${breakpoints.mobile}) {
     padding: 0 30px;
     flex-direction: column;
