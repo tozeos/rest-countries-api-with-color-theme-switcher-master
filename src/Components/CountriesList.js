@@ -25,13 +25,13 @@ export const CountriesList = () => {
     if (error) {
         return <div>Error: {error.message}</div>
     } else if (!isLoaded) {
-        return <div>Loading...</div> // personalizar essa bosta aqui. formatar população para o formato 00,000.000
+        return <div>Loading...</div>
     } else {
         return (
             <>
                 {countries.map((country, index) => (
                     <Card key={index}>
-                        <Flag src={country.flags.png}/>
+                        <Flag src={country.flags.png} alt={`Flag of ${country.name.common}`}/>
                         <Info>
                             <h2>{country.name.common}</h2>
                             <p><span>Population: </span> {country.population}</p>
