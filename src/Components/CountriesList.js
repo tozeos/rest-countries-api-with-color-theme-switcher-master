@@ -1,48 +1,22 @@
-import {useEffect, useState} from "react";
 import styled from "styled-components";
 import {colors} from "./variables";
 
-export const CountriesList = () => {
-    // API Request
-    const [error, setError] = useState(null)
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [countries, setCountries] = useState([])
-
-    useEffect(() => {
-        fetch("https://restcountries.com/v3.1/all")
-            .then(res => res.json())
-            .then((result) => {
-                    setIsLoaded(true)
-                    setCountries(result)
-                },
-                (error) => {
-                    setIsLoaded(true)
-                    setError(error)
-                }
-            )
-    }, [])
-
-    if (error) {
-        return <div>Error: {error.message}</div>
-    } else if (!isLoaded) {
-        return <div>Loading...</div>
-    } else {
-        return (
-            <>
-                {countries.map((country, index) => (
-                    <Card key={index}>
-                        <Flag src={country.flags.png} alt={`Flag of ${country.name.common}`}/>
-                        <Info>
-                            <h2>{country.name.common}</h2>
-                            <p><span>Population: </span> {country.population}</p>
-                            <p><span>Region: </span> {country.region}</p>
-                            <p><span>Capital: </span> {country.capital}</p>
-                        </Info>
-                    </Card>
-                ))}
-            </>
-        )
-    }
+export const CountriesList = (props) => {
+    return (
+        <>
+            {props.data.map((country, index) => (
+                <Card key={index}>
+                    <Flag src={country.flags.png} alt={`Flag of ${country.name.common}`}/>
+                    <Info>
+                        <h2>{country.name.common}</h2>
+                        <p><span>Population: </span> {country.population}</p>
+                        <p><span>Region: </span> {country.region}</p>
+                        <p><span>Capital: </span> {country.capital}</p>
+                    </Info>
+                </Card>
+            ))}
+        </>
+    )
 }
 
 

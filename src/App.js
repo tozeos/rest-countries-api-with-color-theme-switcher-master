@@ -1,70 +1,38 @@
-import React, {useState} from "react";
-import {ThemeProvider} from "styled-components";
-import {useDarkMode} from "./Components/useDarkMode";
-import {lightTheme, darkTheme} from "./Components/Themes";
-import {GlobalStyles} from "./Components/globalStyles";
-import {Container, Content} from "./Components/Container";
-import Toggle from "./Components/Toggler";
-import {Header, Title} from "./Components/Menu";
-import {CountriesList} from "./Components/CountriesList";
-import {Select, SearchFilterContainer} from "./Components/SearchFilter";
+import React, {useEffect, useState} from "react";
+import {Home} from './Components/Home'
+import {Loading} from "./Components/Loading";
 
-const HomePage = () => {
-    const [theme, themeToggler] = useDarkMode();
-    const themeMode = theme === 'light' ? lightTheme : darkTheme
-    const [searchText, setSearchText] = useState("");
-    const [keys, setKeys] = React.useState([]);
+function App(props) {
+    // API Request
+    const [error, setError] = useState(null)
+    const [isLoaded, setIsLoaded] = useState(false)
+    const [countries, setCountries] = useState([])
 
-    // Watch the key press
-    function handleKeyPress(e) {
-        const {key} = e;
-        setKeys([...keys, key]);
+    useEffect(() => {
+        fetch("https://restcountries.com/v3.1/all")
+            .then(res => res.json())
+            .then((result) => {
+                    setIsLoaded(true)
+                    setCountries(result)
+                },
+                (error) => {
+                    setIsLoaded(true)
+                    setError(error)
+                }
+            )
+    }, [])
 
-        if (key === 'Enter') {
-            console.log(searchText)
-        }
+    if (error) {
+        return <div>Error: {error.message}</div>
+    } else if (!isLoaded) {
+        return <Loading/>
+    } else {
+        return (
+            <>
+                <Home data={countries}/>
+            </>
+        )
     }
-
-    return (
-        <ThemeProvider theme={themeMode}>
-            <GlobalStyles/>
-            <Container>
-                <Header>
-                    <a href={'/'}><Title>Where in the world?</Title></a>
-                    <Toggle theme={theme} toggleTheme={themeToggler}/>
-                </Header>
-                <SearchFilterContainer>
-                    <input type="text"
-                           placeholder={'Search for a country...'}
-                           value={searchText}
-                           onChange={(event) => setSearchText(event.target.value)}
-                           onKeyPress={handleKeyPress}
-                           autoFocus={true}
-                    />
-                    <Select name={'regions'}>
-                        <option value={''}>Filter by region</option>
-                        <option value={'africa'}>Africa</option>
-                        <option value={'america'}>America</option>
-                        <option value={'asia'}>Asia</option>
-                        <option value={'europe'}>Europe</option>
-                        <option value={'oceania'}>Oceania</option>
-                    </Select>
-                    {/** <button onClick={handleSearch} type={'button'}>Vai</button> **/}
-                </SearchFilterContainer>
-                <Content>
-                    <CountriesList/>
-                </Content>
-            </Container>
-        </ThemeProvider>
-    );
-}
-
-function App() {
-    return (
-        <>
-            <HomePage/>
-        </>
-    )
 }
 
 export default App;

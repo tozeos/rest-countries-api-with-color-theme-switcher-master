@@ -2,8 +2,6 @@ import styled from "styled-components";
 import {breakpoints} from "./variables";
 
 export const Container = styled.div`
-  height: 100vh;
-
   @media (max-width: ${breakpoints.mobile}) {
     display: flex;
     flex-direction: column;
