@@ -1,15 +1,26 @@
 import styled from "styled-components";
 import {colors} from "./variables";
+import {useState} from "react";
+import numeral from 'numeral'
 
 export const CountriesList = (props) => {
+    // Filter countries
+    const [searchTerm, setSearchTerm] = useState()
+    let search = props.search
     return (
         <>
-            {props.data.map((country, index) => (
-                <Card key={index}>
+            {props.data.filter((val) => {
+                if(search === '') {
+                    return val
+                } else if (val.data.name.common.toLowerCase().includes(search.toLowerCase())){
+                    return val
+                }
+            }).map((country, key) => (
+                <Card key={key}>
                     <Flag src={country.flags.png} alt={`Flag of ${country.name.common}`}/>
                     <Info>
                         <h2>{country.name.common}</h2>
-                        <p><span>Population: </span> {country.population}</p>
+                        <p><span>Population: </span> {numeral(country.population).format('0,0')}</p>
                         <p><span>Region: </span> {country.region}</p>
                         <p><span>Capital: </span> {country.capital}</p>
                     </Info>

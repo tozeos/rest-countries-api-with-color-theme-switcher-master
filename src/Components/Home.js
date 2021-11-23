@@ -19,7 +19,7 @@ export const Home = (props) => {
     const countries = props.data;
 
     // Watch the key press -- Filter by region
-    function handleKeyPress(e) {
+/*    function handleKeyPress(e) {
         const {key} = e;
         setKeys([...keys, key]);
 
@@ -27,7 +27,7 @@ export const Home = (props) => {
             console.log(searchText)
         }
         return true
-    }
+    }*/
 
     return (
         <ThemeProvider theme={themeMode}>
@@ -42,7 +42,7 @@ export const Home = (props) => {
                            placeholder={'Search for a country...'}
                            value={searchText}
                            onChange={(event) => setSearchText(event.target.value)}
-                           onKeyPress={handleKeyPress}
+                           // onKeyPress={handleKeyPress}
                            autoFocus={true}
                     />
                     <Select name={'regions'} onChange={(event) => setOption(event.target.value)}>
@@ -53,7 +53,6 @@ export const Home = (props) => {
                         <option value={'europe'}>Europe</option>
                         <option value={'oceania'}>Oceania</option>
                     </Select>
-                    {/** <button type={'button'}>Vai</button> **/}
                 </SearchFilterContainer>
                 <Content>
                     {(searchText !== '' ? <CountryComponent country={countries} searchValue={searchText}/> :
